@@ -88,8 +88,8 @@ def predict_filtered_images(model, data_frame, root_dir, output_excel):
 
 
 # New paths for the CSV file and root directory
-csv_file = 'E:/新柱子-2/原始图像/RGB/224X224/CNN训练预测-新柱子-纯原始数据-点png - 标记-删除XXXXX.csv'  # Path to your CSV file
-root_dir = 'E:/新柱子-2/原始图像/RGB/224X224/新柱子-原始图像全'  # Root directory for images
+csv_file = 'E:/X.csv'  # Path to your CSV file
+root_dir = 'E:/'  # Root directory for images
 
 # Load the dataset
 data_frame = pd.read_csv(csv_file)
@@ -97,7 +97,7 @@ data_frame = pd.read_csv(csv_file)
 # Directory containing the models
 model_dir = 'F:/python-deepL/Pyrazine'
 # Directory to save the predictions
-output_dir = 'D:/新柱子-全'
+output_dir = 'D:/'
 
 # Ensure the output directory exists
 os.makedirs(output_dir, exist_ok=True)
@@ -123,4 +123,4 @@ for model_filename in os.listdir(model_dir):
 # # Directory containing the models
 # model_dir = 'F:/python-deepL/Pyrazine'
 # # Directory to save the predictions
-# output_dir = 'D:/1'
+# output_dir = 'D:/'
