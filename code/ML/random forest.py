@@ -41,7 +41,7 @@ class CustomDataset(Dataset):
         return image, image_class, content_label
 
 # Create dataset instance
-dataset = CustomDataset(csv_file='E:/分类任务/224_224/含量分类+验证集测试集分类-四甲基吡嗪.csv', root_dir='E:/分类任务/224_224', transform=transform)
+dataset = CustomDataset(csv_file='E:/X.csv', root_dir='E:/', transform=transform)
 
 # Split dataset based on 'class' column
 train_indices = dataset.data_frame[dataset.data_frame['class'] == 1].index.tolist()
@@ -67,11 +67,11 @@ X_train, y_train = dataloader_to_numpy(train_loader)
 X_test, y_test = dataloader_to_numpy(test_loader)
 
 # Train RandomForest model
-clf = RandomForestClassifier(n_estimators=40, max_depth=7, min_samples_leaf=1, min_samples_split=3, random_state=42)  #默认参数为 (n_estimators=100, random_state=42)
+clf = RandomForestClassifier(n_estimators=40, max_depth=7, min_samples_leaf=1, min_samples_split=3, random_state=42)  #The default parameters are (n_estimators=100, random_state=42)
 clf.fit(X_train, y_train)
 
 # Save model
-model_path = 'E:/分类任务/模型保存/random_best_forest_model.pkl'
+model_path = 'E:/random_best_forest_model.pkl'
 joblib.dump(clf, model_path)
 print(f'Model saved to {model_path}')
 
@@ -102,7 +102,7 @@ def batch_predict(model_path, image_folder, output_csv, transform):
     print(f'Results saved to {output_csv}')
 
 # Example: batch predict images and save results to CSV
-image_folder = 'E:/分类任务/224_224/新建文件夹'
+image_folder = 'E:/'
 output_csv = 'predictions.csv'
 batch_predict(model_path, image_folder, output_csv, transform)
 
