@@ -39,7 +39,7 @@ class CustomDataset(Dataset):
         return img_name, image, image_class, content_label
 
 # Create dataset instance
-dataset = CustomDataset(csv_file='E:/分类任务/224_224/含量分类+验证集测试集分类-四甲基吡嗪.csv', root_dir='E:/分类任务/224_224', transform=transform)
+dataset = CustomDataset(csv_file='E:/X.csv', root_dir='E:/', transform=transform)
 
 # Split dataset based on 'class' column to create validation set
 validation_indices = dataset.data_frame[dataset.data_frame['class'] == 3].index.tolist()
@@ -60,7 +60,7 @@ def dataloader_to_numpy_with_filenames(dataloader):
 filenames, X_validation, y_validation = dataloader_to_numpy_with_filenames(validation_loader)
 
 # Load the saved model
-model_path = 'E:/分类任务/模型保存/random_best_forest_model.pkl'
+model_path = 'E:/random_best_forest_model.pkl'
 model = joblib.load(model_path)
 
 # Predict the results for the validation set
@@ -76,6 +76,6 @@ validation_results = pd.DataFrame({
     'True Label': y_validation,
     'Predicted Label': y_validation_pred
 })
-validation_results.to_csv('E:/分类任务/模型保存/random_forest_BEST_2.csv', index=False)
+validation_results.to_csv('E:/random_forest_BEST_2.csv', index=False)
 print('Validation results saved to validation_predictions.csv')
 
