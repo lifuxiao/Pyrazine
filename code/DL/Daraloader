@@ -39,8 +39,8 @@ class ImageDataset(Dataset):
 
 def build_parser():
     parser = ArgumentParser()
-    parser.add_argument('--image_dir', type=str, default='E:/RGB/224_224', help='path to folder of training images')
-    parser.add_argument('--train_file', type=str, default='E:/RGB/224_224/sample_output.csv', help='path to csv file of training/testing examples')
+    parser.add_argument('--image_dir', type=str, default='E:/', help='path to folder of training images')
+    parser.add_argument('--train_file', type=str, default='E:/sample_output.csv', help='path to csv file of training/testing examples')
     parser.add_argument('--batch_size', type=int, default=16, help='training batch size')
     return parser
 
