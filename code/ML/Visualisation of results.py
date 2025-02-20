@@ -5,7 +5,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 import seaborn as sns
 
 # Load the validation results
-validation_results = pd.read_csv('E:/分类任务/模型保存/random_forest_BEST_2.csv')
+validation_results = pd.read_csv('E:/random_forest_BEST_2.csv')
 
 # Map labels to their respective categories
 label_mapping = {4: 'low', 5: 'medium', 6: 'high'}
@@ -42,7 +42,7 @@ sns.heatmap(conf_matrix_normalized, annot=annotations, fmt='', cmap='Blues', xti
 plt.xlabel('Predicted Label')
 plt.ylabel('True Label')
 plt.title('Confusion Matrix with Counts and Percentages')
-plt.savefig('E:/分类任务/模型保存/random_forest_BEST_2X.svg', format='svg')
+plt.savefig('E:/random_forest_BEST_2X.svg', format='svg')
 plt.close()
 # Save the calculation results of F1 and recall (recovery rate) as a CSV file
 metrics_df = pd.DataFrame({
@@ -52,6 +52,6 @@ metrics_df = pd.DataFrame({
     'F1 Score': f1
 })
 
-metrics_df.to_csv('E:/分类任务/模型保存/metrics_results.csv', index=False)
+metrics_df.to_csv('E:/metrics_results.csv', index=False)
 
-metrics_df.head(), 'E:/分类任务/模型保存/random_forest_BEST_2X.svg', 'E:/分类任务/模型保存/random_forest_BEST_2X.csv'
+metrics_df.head(), 'E:/random_forest_BEST_2X.svg', 'E:/random_forest_BEST_2X.csv'
