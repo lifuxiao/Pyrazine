@@ -9,13 +9,13 @@ from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 import joblib
 
-# 定义图像转换
+# image transformation
 transform = transforms.Compose([
     transforms.ToTensor()
 ])
 
 
-# 自定义数据集类
+# Custom Dataset Classes
 class CustomDataset(Dataset):
     def __init__(self, csv_file, root_dir, transform=None):
         self.data_frame = pd.read_csv(csv_file)
@@ -31,8 +31,8 @@ class CustomDataset(Dataset):
 
         img_name = os.path.join(self.root_dir, self.data_frame.iloc[idx, 0])
         image = Image.open(img_name)
-        image_class = int(self.data_frame.iloc[idx]['class'])  # 直接指定'class'列
-        content_label = int(self.data_frame.iloc[idx]['content'])  # 直接指定'content'列
+        image_class = int(self.data_frame.iloc[idx]['class'])  # Specify the ‘class’ column directly
+        content_label = int(self.data_frame.iloc[idx]['content'])  # Specify the ‘content’ column directly
 
         if self.transform:
             image = self.transform(image)
@@ -40,32 +40,32 @@ class CustomDataset(Dataset):
         return image, image_class, content_label
 
 
-# 创建数据集实例
-dataset = CustomDataset(csv_file='E:/分类任务/224_224/含量分类+验证集测试集分类-四甲基吡嗪.csv', root_dir='E:/分类任务/224_224',
+# Creating DataSet
+dataset = CustomDataset(csv_file='E:/X.csv', root_dir='E:/',
                         transform=transform)
 
-# 根据'class'列划分数据集
+# Split the dataset according to the ‘class’ columns
 train_indices = dataset.data_frame[dataset.data_frame['class'] == 1].index.tolist()
 test_indices = dataset.data_frame[dataset.data_frame['class'] == 2].index.tolist()
 
 train_dataset = torch.utils.data.Subset(dataset, train_indices)
 test_dataset = torch.utils.data.Subset(dataset, test_indices)
 
-# 创建数据加载器
+# Creating DataLoader
 train_loader = DataLoader(train_dataset, batch_size=4, shuffle=True, num_workers=0)
 test_loader = DataLoader(test_dataset, batch_size=4, shuffle=True, num_workers=0)
 
 
-# 定义辅助函数，将DataLoader转换为NumPy数组
+# Define function to convert DataLoader to NumPy array
 def dataloader_to_numpy(dataloader):
     images, labels = [], []
     for imgs, _, lbls in dataloader:
-        images.append(imgs.view(imgs.size(0), -1).numpy())  # 将图像展平
+        images.append(imgs.view(imgs.size(0), -1).numpy())  
         labels.append(lbls.numpy())
     return np.vstack(images), np.concatenate(labels)
 
 
-# 转换数据
+
 X_train, y_train = dataloader_to_numpy(train_loader)
 X_test, y_test = dataloader_to_numpy(test_loader)
 
