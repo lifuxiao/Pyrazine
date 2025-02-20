@@ -1,0 +1,77 @@
+import torch
+import torchvision.transforms as transforms
+from PIL import Image
+import pandas as pd
+import os
+from argparse import ArgumentParser
+from torch.utils.data import Dataset, DataLoader
+
+class ImageDataset(Dataset):
+    def __init__(self, csv_file, image_dir):
+        self.data = pd.read_csv(csv_file)
+        self.image_names = self.data.iloc[:, 0]
+        self.four_pyrazine = torch.tensor(self.data.iloc[:, 1].values, dtype=torch.float32)
+        self.three_pyrazine = torch.tensor(self.data.iloc[:, 2].values, dtype=torch.float32)
+        self.other_pyrazine = torch.tensor(self.data.iloc[:, 3].values, dtype=torch.float32)
+        self.classes = torch.tensor(self.data.iloc[:, 4].values, dtype=torch.float32)
+        self.image_dir = image_dir
+        self.transform = transforms.Compose([
+            transforms.ToTensor(),
+        ])
+
+    def __len__(self):
+        return len(self.image_names)
+
+    def __getitem__(self, idx):
+        image_name = self.image_names.iloc[idx]
+        image_path = os.path.join(self.image_dir, image_name)
+        with Image.open(image_path) as img:
+            img = img.convert("RGB")
+            img_tensor = self.transform(img)
+
+        return {
+            'image': img_tensor,
+            'four_pyrazine': self.four_pyrazine[idx],
+            'three_pyrazine': self.three_pyrazine[idx],
+            'other_pyrazine': self.other_pyrazine[idx],
+            'classes': self.classes[idx]
+        }
+
+def build_parser():
+    parser = ArgumentParser()
+    parser.add_argument('--image_dir', type=str, default='E:/RGB/224_224', help='path to folder of training images')
+    parser.add_argument('--train_file', type=str, default='E:/RGB/224_224/sample_output.csv', help='path to csv file of training/testing examples')
+    parser.add_argument('--batch_size', type=int, default=16, help='training batch size')
+    return parser
+
+
+parser = build_parser()
+args = parser.parse_args()
+
+    # Load dataset
+dataset = ImageDataset(csv_file=args.train_file, image_dir=args.image_dir)
+train_indices = (dataset.classes != 2).nonzero(as_tuple=True)[0].tolist()
+val_indices = (dataset.classes == 3).nonzero(as_tuple=True)[0].tolist()
+
+train_dataset = torch.utils.data.Subset(dataset, train_indices)
+val_dataset = torch.utils.data.Subset(dataset, val_indices)
+
+train_loader = DataLoader(dataset=train_dataset, batch_size=args.batch_size, shuffle=True)
+val_loader = DataLoader(dataset=val_dataset, batch_size=1, shuffle=False)  # Batch size 1 for validation
+
+    # Debugging statements
+train_sample = train_dataset[0]
+img, target = train_sample['image'], train_sample['four_pyrazine']
+print("Train sample image shape:", img.shape)
+print("Train sample targets:", target)
+
+for batch in train_loader:
+    print("Train batch images shape:", batch['image'].shape)
+    print("Train batch labels shape:", batch['four_pyrazine'].shape)
+    break
+
+for batch in val_loader:
+    print("Validation batch images shape:", batch['image'].shape)
+    print("Validation batch labels shape:", batch['four_pyrazine'].shape)
+    break
+
