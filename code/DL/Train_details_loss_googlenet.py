@@ -98,5 +98,5 @@ loss_data = {
 }
 
 df = pd.DataFrame(loss_data)
-df.to_excel('E:/googlenet123_none_training_validation_loss_200_224X224.xlsx', index=False)
+df.to_excel('E:/googlenet123_none_training_validation_loss.xlsx', index=False)
 print("Loss values saved to training_validation_loss.xlsx.")
