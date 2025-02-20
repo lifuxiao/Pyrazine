@@ -68,8 +68,8 @@ def batch_predict(model_path, image_folder, output_csv, transform):
 
 if __name__ == "__main__":
     # Create dataset instance
-    dataset = CustomDataset(csv_file='E:/分类任务/224_224/含量分类+验证集测试集分类-四甲基吡嗪.csv',
-                            root_dir='E:/分类任务/224_224', transform=transform)
+    dataset = CustomDataset(csv_file='E:/x.csv',
+                            root_dir='E:/', transform=transform)
 
     # Split dataset based on 'class' column
     train_indices = dataset.data_frame[dataset.data_frame['class'] == 1].index.tolist()
@@ -108,7 +108,7 @@ if __name__ == "__main__":
     best_model = grid_search.best_estimator_
 
     # Save the best model
-    model_path = 'E:/分类任务/模型保存/svm_best_model.pkl'
+    model_path = 'E:/svm_best_model.pkl'
     joblib.dump(best_model, model_path)
     print(f'Best model saved to {model_path}')
 
@@ -118,6 +118,6 @@ if __name__ == "__main__":
     print(f'Test Accuracy of best model: {test_accuracy:.2f}')
 
     # Example: batch predict images in a folder and save results to CSV
-    image_folder = 'E:/分类任务/224_224/新建文件夹'
-    output_csv = 'predictions2.csv'
+    image_folder = 'E:/'
+    output_csv = 'predictions.csv'
     batch_predict(model_path, image_folder, output_csv, transform)
