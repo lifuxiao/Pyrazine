@@ -7,7 +7,7 @@ from Dataloader import ImageDataset, build_parser
 import pandas as pd
 
 # Load the pretrained resnet101 model
-resnet101 = models.resnet152(weights='DEFAULT')
+resnet101 = models.resnet152(weights='DEFAULT') #choose other versions like resnet152, resnet50, etc.
 print(resnet101)
 # Modify the classifier to output three values
 resnet101.fc = nn.Linear(resnet101.fc.in_features, 3)
