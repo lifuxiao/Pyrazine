@@ -7,7 +7,7 @@ from Dataloader import ImageDataset, build_parser
 import pandas as pd
 
 # Load the pretrained densenet model
-densenet = models.densenet201(weights=None)  # You can choose other versions like densenet169, densenet201, etc.
+densenet = models.densenet201(weights=None)  #  choose other versions like densenet169, densenet201, etc.
 
 # Modify the classifier to output three values
 densenet.classifier = nn.Linear(densenet.classifier.in_features, 3)
@@ -97,5 +97,5 @@ loss_data = {
 }
 
 df = pd.DataFrame(loss_data)
-df.to_excel('E:/densnet_201_none_training_validation_loss_200_224X224.xlsx', index=False)
+df.to_excel('E:/densnet_201_none_training_validation_loss.xlsx', index=False)
 print("Loss values saved to training_validation_loss.xlsx.")
