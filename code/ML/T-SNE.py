@@ -35,7 +35,7 @@ class CustomDataset(Dataset):
         return image, content_label
 
 # Create dataset instance
-dataset = CustomDataset(csv_file='E:/分类任务/224_224/含量分类+验证集测试集分类-四甲基吡嗪.csv', root_dir='E:/分类任务/224_224', transform=transform)
+dataset = CustomDataset(csv_file='E:/X.csv', root_dir='E:/', transform=transform)
 
 # Create DataLoader
 data_loader = DataLoader(dataset, batch_size=4, shuffle=True, num_workers=0)
@@ -80,6 +80,6 @@ handles = [plt.Line2D([0], [0], marker='o', color='w', markerfacecolor=color, ma
 plt.legend(handles=handles, title="Content Label")
 
 # Save the figure as an SVG file to E drive
-plt.savefig('E:/分类任务/tSNE_Visualization.svg', format='svg')
+plt.savefig('E:/tSNE_Visualization.svg', format='svg')
 
 plt.show()
