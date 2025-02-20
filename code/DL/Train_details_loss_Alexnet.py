@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader
 from Dataloader import ImageDataset, build_parser
 import pandas as pd
 
-# Load the pretrained alexnet model
+# Load the pretrained alexnet model/non-pretrained parameters (weights='NONE')
 alexnet = models.alexnet(weights='DEFAULT')
 
 # Modify the classifier to output three values
@@ -98,5 +98,5 @@ loss_data = {
 }
 
 df = pd.DataFrame(loss_data)
-df.to_excel('F:/python-deepL/1.训练好的模型/Alexnet_50-pretrain/alexnet_training_validation_loss_200_224X224.xlsx', index=False)
+df.to_excel('F:/alexnet_training_validation_loss.xlsx', index=False)
 print("Loss values saved to training_validation_loss.xlsx.")
